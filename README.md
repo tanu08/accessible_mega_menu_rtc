@@ -1,5 +1,7 @@
 run this reduced test case at https://care4kittens.github.io/accessible_mega_menu_rtc/
 
+it illustrates issues with touch interaction using the accessible megamenu from https://github.com/adobe-accessibility/Accessible-Mega-Menu
+
 issues seem to occur as follows
 - UNUSABLE on android (various releases) with chrome (various releases; tested with varios devices)
   - parent menu items don't expand at all; no navigation to links in submenus
