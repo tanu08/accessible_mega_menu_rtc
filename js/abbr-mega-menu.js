@@ -292,7 +292,7 @@ limitations under the License.
          * @private
          */
         _clickHandler = function (event) {
-            var target = $(event.currentTarget),
+            var target = $(event.target).closest(':tabbable'),
                 topli = target.closest('.' + this.settings.topNavItemClass),
                 panel = target.closest('.' + this.settings.panelClass);
             if (topli.length === 1
@@ -301,17 +301,17 @@ limitations under the License.
                 if (!target.hasClass(this.settings.openClass)) {
                     event.preventDefault();
                     event.stopPropagation();
-                    //_togglePanel.call(this, event);
+                    _togglePanel.call(this, event);
                     this.justFocused = false;
                 } else {
                     if (this.justFocused) {
                         event.preventDefault();
                         event.stopPropagation();
                         this.justFocused = false;
-                    } else if (isTouch) {
+                    } else {
                         event.preventDefault();
                         event.stopPropagation();
-                        _togglePanel.call(this, event, target.hasClass(this.settings.openClass));
+                        _togglePanel.call(this, event, true);
                     }
                 }
             }
@@ -567,8 +567,8 @@ limitations under the License.
             case Keyboard.SPACE:
                 if (isTopNavItem) {
                     event.preventDefault();
-                    _mouseDownHandler.call(that, event);
-                    //_clickHandler.call(that, event);
+                    //_mouseDownHandler.call(that, event);
+                    _clickHandler.call(that, event);
                 } else {
                     return true;
                 }
@@ -576,7 +576,8 @@ limitations under the License.
             case Keyboard.ENTER:
                 if (isTopNavItem) {
                     event.preventDefault();
-                    _mouseDownHandler.call(that, event);
+                    //_mouseDownHandler.call(that, event);
+                    _clickHandler.call(that, event);
                 } else {
                     return true;
                 }
@@ -652,11 +653,11 @@ limitations under the License.
             if ($(event.target).is(this.settings.panelClass) || $(event.target).closest(":focusable").length) {
                 this.mouseFocused = true;
             }
-            if ($(event.target).hasClass("open")) {
+            /*if ($(event.target).hasClass("open")) {
                 _togglePanel.call(this, event, true);
             } else {
                 _togglePanel.call(this, event);
-            }
+            }*/
             this.mouseTimeoutID = setTimeout(function () {
                 clearTimeout(this.focusTimeoutID);
             }, 1);
@@ -757,7 +758,7 @@ limitations under the License.
                     var topnavitemlink, topnavitempanel;
                     topnavitem = $(topnavitem);
                     topnavitem.addClass(settings.topNavItemClass);
-                    topnavitemlink = topnavitem.children("a:first");//topnavitem.find(":tabbable:first");
+                    topnavitemlink = topnavitem.find(":tabbable:first");
                     topnavitempanel = topnavitem.children(":not(:tabbable):last");
                     _addUniqueId.call(that, topnavitemlink);
                     if (topnavitempanel.length) {
